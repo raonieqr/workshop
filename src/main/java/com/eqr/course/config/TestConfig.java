@@ -1,14 +1,8 @@
 package com.eqr.course.config;
 
-import com.eqr.course.entities.Category;
-import com.eqr.course.entities.Order;
-import com.eqr.course.entities.Product;
-import com.eqr.course.entities.User;
+import com.eqr.course.entities.*;
 import com.eqr.course.entities.enums.OrderStatus;
-import com.eqr.course.repositories.CategoryRepository;
-import com.eqr.course.repositories.OrderRepository;
-import com.eqr.course.repositories.ProductRepository;
-import com.eqr.course.repositories.UserRepository;
+import com.eqr.course.repositories.*;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +23,8 @@ public class TestConfig implements CommandLineRunner{
     private CategoryRepository categoryRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -61,5 +57,10 @@ public class TestConfig implements CommandLineRunner{
 
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2));
+
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3));
     }
 }
